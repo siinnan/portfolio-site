@@ -1,25 +1,48 @@
-# CODING AGENTS: READ THIS FIRST
+# Zafar &amp; Sinan — portfolio site
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+A single-page video portfolio. Tiles loop silently; click one to expand it in
+place with sound, others reflow around it. Plain HTML/CSS/JS, no build step,
+free to host on GitHub Pages.
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+```
+index.html          the page
+css/style.css        all styling
+js/main.js            tile data + open/close behaviour + video wiring
+assets/videos/        drop .mp4 files here (see assets/videos/README.md)
+design/                the original Claude Design handoff (mockups, chat log) — reference only, not shipped
+```
 
-## What you should do — IMPORTANT
+## Run it locally
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+No build step. Either open `index.html` directly, or serve it so the video
+`fetch`/`error` handling behaves like it will in production:
 
-**Read `project/Portfolio Board.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+```
+python3 -m http.server 8000
+# then open http://localhost:8000
+```
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+## Add videos
 
-## About the design files
+See `assets/videos/README.md`. Short version: name each `.mp4` after the
+tile's `slug` in `js/main.js` and drop it in `assets/videos/` — nothing else
+to wire up.
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+## Host it on GitHub Pages (free)
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+1. Push this repo to GitHub.
+2. Repo **Settings → Pages** → under "Build and deployment", set **Source**
+   to "Deploy from a branch", branch `main`, folder `/ (root)`. Save.
+3. GitHub gives you a `https://<username>.github.io/<repo>/` URL a minute or
+   two later.
 
-## Bundle contents
+That's the whole hosting setup — no server, no framework, no cost. The one
+thing to watch as you add videos is repo size (see the note in
+`assets/videos/README.md` on keeping files small and when to move to Git LFS
+or an external host instead).
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Videography Portfolio Mockups` project files (HTML prototypes, assets, components)
+## About `design/`
+
+`design/` is the original handoff from Claude Design: the chat transcript
+and the three board mockups the user picked from (1a, "ragged masonry", is
+the one built here). Kept for reference; it isn't part of the shipped site.
