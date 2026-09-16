@@ -1,32 +1,49 @@
 // Zafar & Sinan — portfolio board (layout 1a, ragged masonry)
 //
-// Video files: drop an .mp4 named after a tile's `slug` into assets/videos/
-// (e.g. assets/videos/roastery-brand-film.mp4) and it plays automatically —
-// nothing else to wire up. Until a file exists for a tile, that tile falls
-// back to the placeholder frame below (this is expected, not a bug).
+// Video files are hosted on Cloudflare R2 (free tier), not in this repo —
+// see assets/videos/README.md for why. Each tile's `file` field is the
+// exact object name in the R2 bucket; VIDEO_BASE_URL below is the bucket's
+// public URL. Update the titles/blurbs in WORK below with real project
+// details whenever you get a chance — they're auto-generated from the
+// original clip filenames for now.
 
 (function () {
   "use strict";
 
-  const VIDEO_DIR = "assets/videos/";
+  const VIDEO_BASE_URL = "https://pub-911d10567cc84eb59e6b9354e927ffc2.r2.dev/";
 
   // Column span out of 12, row-uniform bands so the 9:16 tiles interlock
-  // with no holes: big / small / big.
-  const SPANS = [4, 4, 4, 2, 2, 2, 2, 2, 2, 4, 4, 4];
+  // with no holes: big / small / big / small / big.
+  const SPANS = [
+    4, 4, 4,
+    2, 2, 2, 2, 2, 2,
+    4, 4, 4,
+    2, 2, 2, 2, 2, 2,
+    4, 4, 4
+  ];
 
   const WORK = [
-    { slug: "roastery-brand-film", num: "01", title: "Roastery / Brand Film", meta: "Brand film · 2:10", blurb: "One shoot day. A two-minute origin film, plus nine vertical lifts that ran for a month." },
-    { slug: "sneaker-drop", num: "02", title: "Sneaker Drop", meta: "Ads / paid · 0:15", blurb: "Fifteen-second paid cut. Three hooks tested against one body, the winner scaled." },
-    { slug: "gym-launch", num: "03", title: "Gym Launch", meta: "Reels · 0:28", blurb: "Opening week filmed in a day, then posted daily for a fortnight." },
-    { slug: "restaurant-menu-refresh", num: "04", title: "Restaurant Menu Refresh", meta: "Food / social · 0:45", blurb: "Twelve dishes in an afternoon. One reel per plate, enough for six weeks of posts." },
-    { slug: "founder-interview", num: "05", title: "Founder Interview", meta: "Talking head · 4:02", blurb: "Two-camera interview, captioned, sliced into six short-form pulls." },
-    { slug: "skate-session", num: "06", title: "Skate Session", meta: "Documentary · 3:18", blurb: "Handheld all day, graded warm, cut to the sound of the session." },
-    { slug: "jewellery-product", num: "07", title: "Jewellery Product", meta: "Product · 0:22", blurb: "Macro turntable on a black sweep. Real light, no CGI." },
-    { slug: "wedding-highlight", num: "08", title: "Wedding Highlight", meta: "Event · 5:40", blurb: "Full day, two shooters. A highlight film and a one-minute social edit." },
-    { slug: "barber-shop-series", num: "09", title: "Barber Shop Series", meta: "Social management · Ongoing", blurb: "One shoot day a month feeds a calendar we write and schedule for them." },
-    { slug: "music-video", num: "10", title: "Music Video", meta: "Music · 3:05", blurb: "One location, one lens, shot between eight and ten at night." },
-    { slug: "real-estate-walkthrough", num: "11", title: "Real Estate Walkthrough", meta: "Property · 1:35", blurb: "Gimbal walkthrough plus stills, in their hands the next morning." },
-    { slug: "festival-recap", num: "12", title: "Festival Recap", meta: "Event · 1:12", blurb: "Two days of coverage, recap posted the same night." }
+    { slug: "1927",            file: "1927 1.0.mp4",           num: "01", title: "1927",            meta: "Reel · 0:20", blurb: "Add a line about this project here." },
+    { slug: "andaz",           file: "Andaz 4.0.mp4",          num: "02", title: "Andaz",            meta: "Hospitality · 0:31", blurb: "Add a line about this project here." },
+    { slug: "andazz-2",        file: "Andazz 2.0.mp4",         num: "03", title: "Andaz II",         meta: "Hospitality · 0:30", blurb: "Add a line about this project here." },
+    { slug: "bmw-e30",         file: "bmw e30 4.MP4",          num: "04", title: "BMW E30",          meta: "Automotive · 0:21", blurb: "Add a line about this project here." },
+    { slug: "ciel",            file: "CIEL 1.0.mp4",           num: "05", title: "Ciel",             meta: "Hospitality · 0:32", blurb: "Add a line about this project here." },
+    { slug: "firepit",         file: "FIREPIT 1.0.mp4",        num: "06", title: "Firepit",          meta: "Reel · 0:20", blurb: "Add a line about this project here." },
+    { slug: "gazebo",          file: "Gazebo 3.1.mp4",         num: "07", title: "Gazebo",           meta: "Reel · 0:27", blurb: "Add a line about this project here." },
+    { slug: "gloria",          file: "Gloria 1.0.mp4",         num: "08", title: "Gloria",           meta: "Reel · 0:17", blurb: "Add a line about this project here." },
+    { slug: "haval",           file: "haval final vid.MP4",    num: "09", title: "Haval",            meta: "Automotive · 0:33", blurb: "Add a line about this project here." },
+    { slug: "karl-kids",       file: "Karl Kids 1.0.mp4",      num: "10", title: "Karl Kids",        meta: "Reel · 0:20", blurb: "Add a line about this project here." },
+    { slug: "lambo-urus",      file: "lambo urus reel.MP4",    num: "11", title: "Lamborghini Urus", meta: "Automotive · 0:16", blurb: "Add a line about this project here." },
+    { slug: "liwa",            file: "LIWA 1.0.mp4",           num: "12", title: "Liwa",             meta: "Reel · 0:35", blurb: "Add a line about this project here." },
+    { slug: "sophia",          file: "Sophia 0.4.mp4",         num: "13", title: "Sophia",           meta: "Reel · 0:30", blurb: "Add a line about this project here." },
+    { slug: "steve-aoki",      file: "Stebe Aoki BASIC.mp4",   num: "14", title: "Steve Aoki",       meta: "Event / music · 0:50", blurb: "Add a line about this project here." },
+    { slug: "toto",            file: "Toto1080p 30fps.mp4",    num: "15", title: "Toto",             meta: "Automotive · 0:34", blurb: "Add a line about this project here." },
+    { slug: "wave",            file: "Wave 1.0.mp4",           num: "16", title: "Wave",             meta: "Reel · 0:14", blurb: "Add a line about this project here." },
+    { slug: "zaza",            file: "zaza 1.0.mp4",           num: "17", title: "Zaza",             meta: "Reel · 0:13", blurb: "Add a line about this project here." },
+    { slug: "untitled-clip-1", file: "copy_31F99689-2E5D-4A31-8C89-6E7685A8C80E.MOV", num: "18", title: "Untitled Clip 1", meta: "Reel · 0:51", blurb: "Rename this tile once you know which project this clip is." },
+    { slug: "untitled-clip-2", file: "copy_407A979D-C9A1-4342-BD8D-E9327BCD9D6B.MOV", num: "19", title: "Untitled Clip 2", meta: "Reel · 0:17", blurb: "Rename this tile once you know which project this clip is." },
+    { slug: "untitled-clip-3", file: "copy_447415D8-7BD0-4A88-9D0F-CAC130B3D42B.MOV", num: "20", title: "Untitled Clip 3", meta: "Reel · 0:15", blurb: "Rename this tile once you know which project this clip is." },
+    { slug: "untitled-clip-4", file: "copy_5BE24F4D-D758-46AE-BB2D-74BB9229B183.MOV", num: "21", title: "Untitled Clip 4", meta: "Reel · 0:16", blurb: "Rename this tile once you know which project this clip is." }
   ];
 
   const grid = document.getElementById("tile-grid");
@@ -44,11 +61,12 @@
     return node;
   }
 
-  // Wires a <video> to try loading a real file. On success it fades the
-  // placeholder out and plays; on failure (no file yet) it stays hidden and
-  // the placeholder frame underneath keeps showing.
-  function wireVideo(video, slug, opts) {
-    const src = VIDEO_DIR + slug + ".mp4";
+  // Wires a <video> to try loading a real file from the R2 bucket. On
+  // success it fades the placeholder out and plays; on failure (file
+  // missing/renamed) it stays hidden and the placeholder frame keeps
+  // showing.
+  function wireVideo(video, file, opts) {
+    const src = VIDEO_BASE_URL + encodeURIComponent(file);
     video.muted = !!opts.muted;
     video.loop = true;
     video.playsInline = true;
@@ -78,7 +96,7 @@
 
     const previewVideo = el("video", "tile-video");
     tile.appendChild(previewVideo);
-    wireVideo(previewVideo, item.slug, { muted: true });
+    wireVideo(previewVideo, item.file, { muted: true });
 
     const overlay = el("div", "tile-overlay");
     const metaRow = el("div", "tile-meta-row");
@@ -109,7 +127,7 @@
 
     const screenVideo = el("video", "screen-video", { controls: "" });
     screen.appendChild(screenVideo);
-    wireVideo(screenVideo, item.slug, { muted: false });
+    wireVideo(screenVideo, item.file, { muted: false });
 
     const placeholder = el("div", "screen-placeholder");
     placeholder.appendChild(el("div", "label", { text: "Native player" }));
