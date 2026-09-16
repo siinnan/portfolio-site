@@ -12,6 +12,9 @@
   "use strict";
 
   const VIDEO_BASE_URL = "https://pub-911d10567cc84eb59e6b9354e927ffc2.r2.dev/";
+  // Poster stills are tiny (a few KB each) and live in this repo, so they
+  // load instantly from GitHub Pages — no waiting on R2 for a thumbnail.
+  const POSTER_BASE_URL = "assets/videos/posters/";
 
   // Column span out of 12, row-uniform bands so the 9:16 tiles interlock
   // with no holes: big / small / big / small / big.
@@ -68,6 +71,7 @@
     video.loop = true;
     video.playsInline = true;
     video.preload = "metadata";
+    if (opts.poster) video.poster = opts.poster;
 
     video.addEventListener("loadeddata", function onReady() {
       video.classList.add("is-ready");
@@ -95,7 +99,7 @@
 
     const previewVideo = el("video", "tile-video");
     tile.appendChild(previewVideo);
-    wireVideo(previewVideo, item.file, { muted: true, autoplay: false });
+    wireVideo(previewVideo, item.file, { muted: true, autoplay: false, poster: POSTER_BASE_URL + item.slug + ".jpg" });
 
     tile.addEventListener("mouseenter", function () {
       previewVideo.play().catch(function () { /* not ready yet */ });
@@ -134,11 +138,7 @@
 
     const screenVideo = el("video", "screen-video", { controls: "" });
     screen.appendChild(screenVideo);
-    wireVideo(screenVideo, item.file, { muted: false, autoplay: true });
-
-    const placeholder = el("div", "screen-placeholder");
-    placeholder.appendChild(el("div", "label", { text: "Loading" }));
-    screen.appendChild(placeholder);
+    wireVideo(screenVideo, item.file, { muted: false, autoplay: true, poster: POSTER_BASE_URL + item.slug + ".jpg" });
 
     panel.appendChild(screen);
 

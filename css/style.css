@@ -201,10 +201,9 @@ button:focus-visible,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: none;
+  background: #000;
+  display: block;
 }
-
-.tile-video.is-ready { display: block; }
 
 .tile-overlay {
   position: absolute;
@@ -280,10 +279,9 @@ button:focus-visible,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: none;
+  background: #000;
+  display: block;
 }
-
-.screen-video.is-ready { display: block; }
 
 .screen-texture {
   position: absolute;
