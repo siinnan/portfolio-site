@@ -3,9 +3,10 @@
 // Video files are hosted on Cloudflare R2 (free tier), not in this repo —
 // see assets/videos/README.md for why. Each tile's `file` field is the
 // exact object name in the R2 bucket; VIDEO_BASE_URL below is the bucket's
-// public URL. Update the titles/blurbs in WORK below with real project
-// details whenever you get a chance — they're auto-generated from the
-// original clip filenames for now.
+// public URL.
+//
+// Playback: tile previews are muted and only play on hover, not on page
+// load. Sound only plays once a tile is clicked open.
 
 (function () {
   "use strict";
@@ -23,27 +24,27 @@
   ];
 
   const WORK = [
-    { slug: "1927",            file: "1927 1.0.mp4",           num: "01", title: "1927",            meta: "Reel · 0:20", blurb: "Add a line about this project here." },
-    { slug: "andaz",           file: "Andaz 4.0.mp4",          num: "02", title: "Andaz",            meta: "Hospitality · 0:31", blurb: "Add a line about this project here." },
-    { slug: "andazz-2",        file: "Andazz 2.0.mp4",         num: "03", title: "Andaz II",         meta: "Hospitality · 0:30", blurb: "Add a line about this project here." },
-    { slug: "bmw-e30",         file: "bmw e30 4.MP4",          num: "04", title: "BMW E30",          meta: "Automotive · 0:21", blurb: "Add a line about this project here." },
-    { slug: "ciel",            file: "CIEL 1.0.mp4",           num: "05", title: "Ciel",             meta: "Hospitality · 0:32", blurb: "Add a line about this project here." },
-    { slug: "firepit",         file: "FIREPIT 1.0.mp4",        num: "06", title: "Firepit",          meta: "Reel · 0:20", blurb: "Add a line about this project here." },
-    { slug: "gazebo",          file: "Gazebo 3.1.mp4",         num: "07", title: "Gazebo",           meta: "Reel · 0:27", blurb: "Add a line about this project here." },
-    { slug: "gloria",          file: "Gloria 1.0.mp4",         num: "08", title: "Gloria",           meta: "Reel · 0:17", blurb: "Add a line about this project here." },
-    { slug: "haval",           file: "haval final vid.MP4",    num: "09", title: "Haval",            meta: "Automotive · 0:33", blurb: "Add a line about this project here." },
-    { slug: "karl-kids",       file: "Karl Kids 1.0.mp4",      num: "10", title: "Karl Kids",        meta: "Reel · 0:20", blurb: "Add a line about this project here." },
-    { slug: "lambo-urus",      file: "lambo urus reel.MP4",    num: "11", title: "Lamborghini Urus", meta: "Automotive · 0:16", blurb: "Add a line about this project here." },
-    { slug: "liwa",            file: "LIWA 1.0.mp4",           num: "12", title: "Liwa",             meta: "Reel · 0:35", blurb: "Add a line about this project here." },
-    { slug: "sophia",          file: "Sophia 0.4.mp4",         num: "13", title: "Sophia",           meta: "Reel · 0:30", blurb: "Add a line about this project here." },
-    { slug: "steve-aoki",      file: "Stebe Aoki BASIC.mp4",   num: "14", title: "Steve Aoki",       meta: "Event / music · 0:50", blurb: "Add a line about this project here." },
-    { slug: "toto",            file: "Toto1080p 30fps.mp4",    num: "15", title: "Toto",             meta: "Automotive · 0:34", blurb: "Add a line about this project here." },
-    { slug: "wave",            file: "Wave 1.0.mp4",           num: "16", title: "Wave",             meta: "Reel · 0:14", blurb: "Add a line about this project here." },
-    { slug: "zaza",            file: "zaza 1.0.mp4",           num: "17", title: "Zaza",             meta: "Reel · 0:13", blurb: "Add a line about this project here." },
-    { slug: "untitled-clip-1", file: "copy_31F99689-2E5D-4A31-8C89-6E7685A8C80E.MOV", num: "18", title: "Untitled Clip 1", meta: "Reel · 0:51", blurb: "Rename this tile once you know which project this clip is." },
-    { slug: "untitled-clip-2", file: "copy_407A979D-C9A1-4342-BD8D-E9327BCD9D6B.MOV", num: "19", title: "Untitled Clip 2", meta: "Reel · 0:17", blurb: "Rename this tile once you know which project this clip is." },
-    { slug: "untitled-clip-3", file: "copy_447415D8-7BD0-4A88-9D0F-CAC130B3D42B.MOV", num: "20", title: "Untitled Clip 3", meta: "Reel · 0:15", blurb: "Rename this tile once you know which project this clip is." },
-    { slug: "untitled-clip-4", file: "copy_5BE24F4D-D758-46AE-BB2D-74BB9229B183.MOV", num: "21", title: "Untitled Clip 4", meta: "Reel · 0:16", blurb: "Rename this tile once you know which project this clip is." }
+    { slug: "cinema-city",     file: "1927 1.0.mp4",           num: "01", title: "Cinema City",      meta: "Reel · 0:20", blurb: "" },
+    { slug: "andaz",           file: "Andaz 4.0.mp4",          num: "02", title: "Andaz",            meta: "Hospitality · 0:31", blurb: "" },
+    { slug: "andazz-2",        file: "Andazz 2.0.mp4",         num: "03", title: "Andaz II",         meta: "Hospitality · 0:30", blurb: "" },
+    { slug: "bmw-e30",         file: "bmw e30 4.MP4",          num: "04", title: "BMW E30",          meta: "Automotive · 0:21", blurb: "" },
+    { slug: "ciel",            file: "CIEL 1.0.mp4",           num: "05", title: "Ciel",             meta: "Hospitality · 0:32", blurb: "The tallest hotel in the world." },
+    { slug: "firepit",         file: "FIREPIT 1.0.mp4",        num: "06", title: "Firepit",          meta: "Reel · 0:20", blurb: "" },
+    { slug: "gazebo",          file: "Gazebo 3.1.mp4",         num: "07", title: "Gazebo",           meta: "Reel · 0:27", blurb: "" },
+    { slug: "gloria",          file: "Gloria 1.0.mp4",         num: "08", title: "Gloria",           meta: "Reel · 0:17", blurb: "" },
+    { slug: "auto-detailing",  file: "haval final vid.MP4",    num: "09", title: "Auto Detailing",   meta: "Automotive · 0:33", blurb: "" },
+    { slug: "serves-gourmet",  file: "Karl Kids 1.0.mp4",      num: "10", title: "Serves Gourmet",   meta: "Reel · 0:20", blurb: "" },
+    { slug: "lambo-urus",      file: "lambo urus reel.MP4",    num: "11", title: "Lamborghini Urus", meta: "Automotive · 0:16", blurb: "" },
+    { slug: "jetour",          file: "LIWA 1.0.mp4",           num: "12", title: "Jetour",           meta: "Reel · 0:35", blurb: "" },
+    { slug: "sophia",          file: "Sophia 0.4.mp4",         num: "13", title: "Sophia",           meta: "Reel · 0:30", blurb: "" },
+    { slug: "steve-aoki",      file: "Stebe Aoki BASIC.mp4",   num: "14", title: "Steve Aoki",       meta: "Event / music · 0:50", blurb: "" },
+    { slug: "toto",            file: "Toto1080p 30fps.mp4",    num: "15", title: "Toto",             meta: "Automotive · 0:34", blurb: "" },
+    { slug: "wave",            file: "Wave 1.0.mp4",           num: "16", title: "Wave",             meta: "Reel · 0:14", blurb: "" },
+    { slug: "zaza",            file: "zaza 1.0.mp4",           num: "17", title: "Zaza",             meta: "Reel · 0:13", blurb: "" },
+    { slug: "auto-detailing-2", file: "copy_31F99689-2E5D-4A31-8C89-6E7685A8C80E.MOV", num: "18", title: "Auto Detailing II", meta: "Automotive · 0:51", blurb: "" },
+    { slug: "toto-2",           file: "copy_407A979D-C9A1-4342-BD8D-E9327BCD9D6B.MOV", num: "19", title: "Toto II", meta: "Automotive · 0:17", blurb: "" },
+    { slug: "jeep",             file: "copy_447415D8-7BD0-4A88-9D0F-CAC130B3D42B.MOV", num: "20", title: "Jeep", meta: "Automotive · 0:15", blurb: "" },
+    { slug: "lambo-urus-2",     file: "copy_5BE24F4D-D758-46AE-BB2D-74BB9229B183.MOV", num: "21", title: "Lamborghini Urus II", meta: "Automotive · 0:16", blurb: "" }
   ];
 
   const grid = document.getElementById("tile-grid");
@@ -61,10 +62,6 @@
     return node;
   }
 
-  // Wires a <video> to try loading a real file from the R2 bucket. On
-  // success it fades the placeholder out and plays; on failure (file
-  // missing/renamed) it stays hidden and the placeholder frame keeps
-  // showing.
   function wireVideo(video, file, opts) {
     const src = VIDEO_BASE_URL + encodeURIComponent(file);
     video.muted = !!opts.muted;
@@ -74,7 +71,9 @@
 
     video.addEventListener("loadeddata", function onReady() {
       video.classList.add("is-ready");
-      video.play().catch(function () { /* autoplay blocked, tile still readable */ });
+      if (opts.autoplay) {
+        video.play().catch(function () { /* autoplay blocked */ });
+      }
       video.removeEventListener("loadeddata", onReady);
     });
     video.addEventListener("error", function onError() {
@@ -96,7 +95,15 @@
 
     const previewVideo = el("video", "tile-video");
     tile.appendChild(previewVideo);
-    wireVideo(previewVideo, item.file, { muted: true });
+    wireVideo(previewVideo, item.file, { muted: true, autoplay: false });
+
+    tile.addEventListener("mouseenter", function () {
+      previewVideo.play().catch(function () { /* not ready yet */ });
+    });
+    tile.addEventListener("mouseleave", function () {
+      previewVideo.pause();
+      previewVideo.currentTime = 0;
+    });
 
     const overlay = el("div", "tile-overlay");
     const metaRow = el("div", "tile-meta-row");
@@ -127,11 +134,10 @@
 
     const screenVideo = el("video", "screen-video", { controls: "" });
     screen.appendChild(screenVideo);
-    wireVideo(screenVideo, item.file, { muted: false });
+    wireVideo(screenVideo, item.file, { muted: false, autoplay: true });
 
     const placeholder = el("div", "screen-placeholder");
-    placeholder.appendChild(el("div", "label", { text: "Native player" }));
-    placeholder.appendChild(el("p", null, { text: "Your file plays here, inside the page. Muted loop in the tile, sound when it opens. No branding, no suggested videos." }));
+    placeholder.appendChild(el("div", "label", { text: "Loading" }));
     screen.appendChild(placeholder);
 
     panel.appendChild(screen);
@@ -140,7 +146,9 @@
     body.appendChild(el("div", "panel-title", { text: item.title }));
     body.appendChild(el("div", "panel-meta", { text: item.meta }));
     body.appendChild(el("div", "panel-rule"));
-    body.appendChild(el("div", "panel-blurb", { text: item.blurb }));
+    if (item.blurb) {
+      body.appendChild(el("div", "panel-blurb", { text: item.blurb }));
+    }
 
     const closeBtn = el("button", "panel-close", { type: "button", text: "Close" });
     closeBtn.addEventListener("click", function () { toggle(index); });

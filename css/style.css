@@ -161,7 +161,7 @@ button:focus-visible,
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-flow: row dense;
+  grid-auto-flow: row;
   gap: 12px;
   padding: 32px 0 48px 0;
   align-items: start;
