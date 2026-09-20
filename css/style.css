@@ -520,6 +520,48 @@ button:focus-visible,
 
 .contact-form button:disabled { opacity: 0.6; cursor: default; }
 
+.phone-optional {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dimmer);
+  user-select: none;
+}
+
+/* ---------- Photography ---------- */
+
+.photos {
+  border-top: 2px solid var(--border);
+  padding: 40px 0 48px 0;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.photo {
+  margin: 0;
+  aspect-ratio: 3 / 4;
+  background: var(--tile-bg);
+  border: 2px solid var(--border);
+  overflow: hidden;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 78%;
+}
+
 /* ---------- Footer ---------- */
 
 .site-footer {
@@ -553,4 +595,8 @@ button:focus-visible,
   .screen { width: 100%; }
   .hero { flex-direction: column; }
   .poster { width: 55%; }
+}
+
+@media (max-width: 640px) {
+  .photo-grid { grid-template-columns: 1fr; }
 }
