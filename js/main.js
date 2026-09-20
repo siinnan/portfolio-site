@@ -6,7 +6,7 @@
 // public URL.
 //
 // Playback: tile previews are muted and only play on hover, not on page
-// load. Sound only plays once a tile is clicked open.
+// load. Sound only plays once a tile is clicked open in the lightbox.
 
 (function () {
   "use strict";
@@ -51,7 +51,6 @@
   ];
 
   const grid = document.getElementById("tile-grid");
-  let openIndex = null;
 
   function el(tag, className, attrs) {
     const node = document.createElement(tag);
@@ -101,7 +100,7 @@
     const tile = el("button", "tile", {
       type: "button",
       "aria-label": "Play " + item.title,
-      "aria-expanded": "false"
+      "aria-haspopup": "dialog"
     });
     tile.appendChild(el("div", "tile-texture"));
 
@@ -133,66 +132,129 @@
 
     tile.appendChild(overlay);
 
-    tile.addEventListener("click", function () { toggle(index); });
+    tile.addEventListener("click", function () { openLightbox(index); });
 
     return tile;
-  }
-
-  function buildPanel(item, index) {
-    const panel = el("div", "panel");
-
-    const screen = el("div", "screen");
-    screen.appendChild(el("div", "screen-texture"));
-    screen.appendChild(el("div", "screen-wipe"));
-    screen.appendChild(el("div", "screen-scan"));
-
-    const screenVideo = el("video", "screen-video", { controls: "" });
-    screen.appendChild(screenVideo);
-    wireVideo(screenVideo, item.file, { muted: false, autoplay: true, poster: POSTER_BASE_URL + item.slug + ".jpg" });
-
-    panel.appendChild(screen);
-
-    const body = el("div", "panel-body");
-    body.appendChild(el("div", "panel-title", { text: item.title }));
-    body.appendChild(el("div", "panel-meta", { text: item.meta }));
-    body.appendChild(el("div", "panel-rule"));
-    if (item.blurb) {
-      body.appendChild(el("div", "panel-blurb", { text: item.blurb }));
-    }
-
-    const closeBtn = el("button", "panel-close", { type: "button", text: "Close" });
-    closeBtn.addEventListener("click", function () { toggle(index); });
-    body.appendChild(closeBtn);
-
-    panel.appendChild(body);
-    return panel;
-  }
-
-  function toggle(index) {
-    openIndex = openIndex === index ? null : index;
-    render();
-    if (openIndex !== null) {
-      const openedCell = grid.children[openIndex];
-      if (openedCell) openedCell.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
   }
 
   function render() {
     grid.innerHTML = "";
     WORK.forEach(function (item, index) {
-      const isOpen = openIndex === index;
-      const cell = el("div", "cell" + (isOpen ? " is-open" : ""));
+      const cell = el("div", "cell");
       cell.style.setProperty("--span", SPANS[index]);
-
-      if (isOpen) {
-        cell.appendChild(buildPanel(item, index));
-      } else {
-        cell.appendChild(buildTile(item, index));
-      }
-
+      cell.appendChild(buildTile(item, index));
       grid.appendChild(cell);
     });
   }
+
+  // ---------- Lightbox ----------
+  // One shared dialog. Opens with sound and controls, steps with the
+  // previous/next buttons or the arrow keys, closes with Esc, the close
+  // button or a click on the dark backdrop. Focus returns to the tile.
+  const lightbox = el("div", "lightbox", { role: "dialog", "aria-modal": "true", "aria-label": "Video player", hidden: "" });
+  const lbBackdrop = el("div", "lb-backdrop");
+  const lbFrame = el("div", "lb-frame");
+  const lbVideo = el("video", "lb-video", { controls: "", playsinline: "" });
+  lbVideo.loop = true;
+  const lbBar = el("div", "lb-bar");
+  const lbInfo = el("div", "lb-info");
+  const lbTitle = el("div", "lb-title");
+  const lbMeta = el("div", "lb-meta");
+  lbInfo.appendChild(lbTitle);
+  lbInfo.appendChild(lbMeta);
+  const lbPrev = el("button", "lb-btn", { type: "button", "aria-label": "Previous video", text: "Prev" });
+  const lbNext = el("button", "lb-btn", { type: "button", "aria-label": "Next video", text: "Next" });
+  const lbClose = el("button", "lb-btn lb-close", { type: "button", "aria-label": "Close video", text: "Close" });
+  lbBar.appendChild(lbInfo);
+  lbBar.appendChild(lbPrev);
+  lbBar.appendChild(lbNext);
+  lbBar.appendChild(lbClose);
+  lbFrame.appendChild(lbVideo);
+  lbFrame.appendChild(lbBar);
+  lightbox.appendChild(lbBackdrop);
+  lightbox.appendChild(lbFrame);
+  document.body.appendChild(lightbox);
+
+  let current = null;
+  let lastFocus = null;
+
+  function show(index) {
+    current = (index + WORK.length) % WORK.length;
+    const item = WORK[current];
+    lbTitle.textContent = item.title;
+    lbMeta.textContent = item.meta;
+    lbVideo.poster = POSTER_BASE_URL + item.slug + ".jpg";
+    lbVideo.muted = false;
+    lbVideo.src = VIDEO_BASE_URL + encodeURIComponent(item.file);
+    lbVideo.load();
+    lbVideo.play().catch(function () { /* the controls are there if autoplay is blocked */ });
+    track("video-" + item.slug, item.title);
+  }
+
+  function openLightbox(index) {
+    lastFocus = document.activeElement;
+    lightbox.hidden = false;
+    document.body.classList.add("lb-open");
+    show(index);
+    lbClose.focus();
+  }
+
+  function closeLightbox() {
+    if (lightbox.hidden) return;
+    lbVideo.pause();
+    lbVideo.removeAttribute("src");
+    lbVideo.load();
+    lightbox.hidden = true;
+    document.body.classList.remove("lb-open");
+    current = null;
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  lbPrev.addEventListener("click", function () { show(current - 1); });
+  lbNext.addEventListener("click", function () { show(current + 1); });
+  lbClose.addEventListener("click", closeLightbox);
+  lbBackdrop.addEventListener("click", closeLightbox);
+
+  document.addEventListener("keydown", function (event) {
+    if (lightbox.hidden) return;
+    if (event.key === "Escape") {
+      closeLightbox();
+    } else if (event.key === "ArrowLeft" && document.activeElement !== lbVideo) {
+      show(current - 1);
+    } else if (event.key === "ArrowRight" && document.activeElement !== lbVideo) {
+      show(current + 1);
+    } else if (event.key === "Tab") {
+      // Keep focus inside the dialog.
+      const items = [lbVideo, lbPrev, lbNext, lbClose];
+      const i = items.indexOf(document.activeElement);
+      event.preventDefault();
+      const next = event.shiftKey ? (i <= 0 ? items.length - 1 : i - 1) : (i + 1) % items.length;
+      items[next].focus();
+    }
+  });
+
+  // ---------- Analytics (GoatCounter: no cookies, no consent banner) ----------
+  // Create a free site at goatcounter.com, then put its code here
+  // (for example "zafarsinan" for zafarsinan.goatcounter.com).
+  const GOATCOUNTER_CODE = "";
+
+  function track(path, title) {
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: path, title: title, event: true });
+    }
+  }
+
+  if (GOATCOUNTER_CODE) {
+    const gc = document.createElement("script");
+    gc.async = true;
+    gc.src = "https://gc.zgo.at/count.js";
+    gc.setAttribute("data-goatcounter", "https://" + GOATCOUNTER_CODE + ".goatcounter.com/count");
+    document.head.appendChild(gc);
+  }
+
+  document.querySelectorAll("[data-track]").forEach(function (node) {
+    node.addEventListener("click", function () { track(node.getAttribute("data-track"), node.textContent.trim()); });
+  });
 
   render();
 
