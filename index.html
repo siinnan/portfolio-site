@@ -7,7 +7,7 @@
 <meta name="description" content="A two-person studio for brand films, ads and short-form video. Video production, editing, social media management and content strategy.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="css/style.css?v=3">
+<link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
 
@@ -62,11 +62,19 @@
     <div>
       <h3>Tell us<br>what you're<br>shooting</h3>
     </div>
-    <form class="contact-form" aria-label="Contact form">
-      <input class="input" aria-label="Name" placeholder="Name" name="name">
-      <input class="input" aria-label="Email" placeholder="Email" name="email" type="email">
+    <form class="contact-form" aria-label="Contact form" action="https://formsubmit.co/sanusinan501@icloud.com" method="POST">
+      <input type="hidden" name="_subject" value="New quote request from the portfolio site">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input class="input" aria-label="Name" placeholder="Name" name="name" autocomplete="name" required>
+      <input class="input" aria-label="Email" placeholder="Email" name="email" type="email" autocomplete="email" required>
+      <div class="phone-field">
+        <span class="phone-prefix" aria-hidden="true">+971</span>
+        <input class="input" aria-label="Phone number, UAE +971" placeholder="50 123 4567" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" pattern="[0-9 ]{8,12}" maxlength="12">
+      </div>
       <textarea aria-label="Project details" placeholder="What do you need made?" name="details" rows="4"></textarea>
       <button type="submit">Ask for a quote</button>
+      <div class="contact-status" role="status" aria-live="polite"></div>
       <div class="contact-note">We reply the same day. No retainer to start.</div>
     </form>
   </section>
@@ -77,6 +85,6 @@
 
 </main>
 
-<script src="js/main.js?v=4"></script>
+<script src="js/main.js?v=6"></script>
 </body>
 </html>
