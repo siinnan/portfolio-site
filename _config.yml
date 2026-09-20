@@ -1,0 +1,5 @@
+exclude:
+  - design
+  - README.md
+  - assets/videos/README.md
+
