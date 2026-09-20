@@ -25,8 +25,10 @@
 
 html, body {
   margin: 0;
-  background: var(--page-bg);
+  background: var(--bg);
 }
+
+html { color-scheme: dark; }
 
 body {
   font-family: 'Archivo', sans-serif;
