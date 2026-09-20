@@ -70,7 +70,9 @@
     video.muted = !!opts.muted;
     video.loop = true;
     video.playsInline = true;
-    video.preload = "metadata";
+    // Tiles use preload "none" so the page does not download 21 videos up front;
+    // a tile's file is only attached when the visitor hovers or focuses it.
+    video.preload = opts.lazy ? "none" : "auto";
     if (opts.poster) video.poster = opts.poster;
 
     video.addEventListener("loadeddata", function onReady() {
@@ -85,8 +87,14 @@
       video.removeEventListener("error", onError);
     });
 
-    video.src = src;
-    video.load();
+    function attach() {
+      if (video.getAttribute("src")) return;
+      video.src = src;
+      video.load();
+    }
+
+    if (!opts.lazy) attach();
+    return attach;
   }
 
   function buildTile(item, index) {
@@ -99,9 +107,11 @@
 
     const previewVideo = el("video", "tile-video");
     tile.appendChild(previewVideo);
-    wireVideo(previewVideo, item.file, { muted: true, autoplay: false, poster: POSTER_BASE_URL + item.slug + ".jpg" });
+    const attachPreview = wireVideo(previewVideo, item.file, { muted: true, autoplay: false, lazy: true, poster: POSTER_BASE_URL + item.slug + ".jpg" });
 
+    tile.addEventListener("focus", attachPreview);
     tile.addEventListener("mouseenter", function () {
+      attachPreview();
       previewVideo.play().catch(function () { /* not ready yet */ });
     });
     tile.addEventListener("mouseleave", function () {
