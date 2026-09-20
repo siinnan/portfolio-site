@@ -44,10 +44,10 @@
     { slug: "toto",            file: "Toto1080p 30fps.mp4",    num: "15", title: "Toto",             meta: "Automotive · 0:34", blurb: "" },
     { slug: "wave",            file: "Wave 1.0.mp4",           num: "16", title: "Wave",             meta: "Reel · 0:14", blurb: "" },
     { slug: "zaza",            file: "zaza 1.0.mp4",           num: "17", title: "Zaza",             meta: "Reel · 0:13", blurb: "" },
-    { slug: "auto-detailing-2", file: "copy_31F99689-2E5D-4A31-8C89-6E7685A8C80E.MOV", num: "18", title: "Auto Detailing II", meta: "Automotive · 0:51", blurb: "" },
-    { slug: "toto-2",           file: "copy_407A979D-C9A1-4342-BD8D-E9327BCD9D6B.MOV", num: "19", title: "Toto II", meta: "Automotive · 0:17", blurb: "" },
-    { slug: "jeep",             file: "copy_447415D8-7BD0-4A88-9D0F-CAC130B3D42B.MOV", num: "20", title: "Jeep", meta: "Automotive · 0:15", blurb: "" },
-    { slug: "lambo-urus-2",     file: "copy_5BE24F4D-D758-46AE-BB2D-74BB9229B183.MOV", num: "21", title: "Lamborghini Urus II", meta: "Automotive · 0:16", blurb: "" }
+    { slug: "auto-detailing-2", file: "copy_31F99689-2E5D-4A31-8C89-6E7685A8C80E.mp4", num: "18", title: "Auto Detailing II", meta: "Automotive · 0:51", blurb: "" },
+    { slug: "toto-2",           file: "copy_407A979D-C9A1-4342-BD8D-E9327BCD9D6B.mp4", num: "19", title: "Toto II", meta: "Automotive · 0:17", blurb: "" },
+    { slug: "jeep",             file: "copy_447415D8-7BD0-4A88-9D0F-CAC130B3D42B.mp4", num: "20", title: "Jeep", meta: "Automotive · 0:15", blurb: "" },
+    { slug: "lambo-urus-2",     file: "copy_5BE24F4D-D758-46AE-BB2D-74BB9229B183.mp4", num: "21", title: "Lamborghini Urus II", meta: "Automotive · 0:16", blurb: "" }
   ];
 
   const grid = document.getElementById("tile-grid");
