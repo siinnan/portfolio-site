@@ -195,4 +195,51 @@
   }
 
   render();
+
+  // Quote form: sends each request to email through FormSubmit (no server
+  // needed). The +971 country code is fixed on the page; visitors type only
+  // the local number, and we prepend the code before sending.
+  const form = document.querySelector(".contact-form");
+  if (form) {
+    const status = form.querySelector(".contact-status");
+    const button = form.querySelector('button[type="submit"]');
+    const phone = form.querySelector('input[name="phone"]');
+
+    if (phone) {
+      phone.addEventListener("input", function () {
+        phone.value = phone.value.replace(/[^0-9 ]/g, "");
+      });
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const data = new FormData(form);
+      const digits = String(data.get("phone") || "").replace(/\D/g, "").replace(/^0+/, "");
+      data.set("phone", digits ? "+971 " + digits : "");
+
+      button.disabled = true;
+      status.textContent = "Sending...";
+
+      fetch(form.action.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data
+      })
+        .then(function (res) {
+          return res.json().then(function (body) {
+            if (!res.ok || String(body.success) === "false") throw new Error("send failed");
+          });
+        })
+        .then(function () {
+          form.reset();
+          status.textContent = "Sent. We will reply the same day.";
+        })
+        .catch(function () {
+          status.textContent = "Could not send. Please try again.";
+        })
+        .finally(function () {
+          button.disabled = false;
+        });
+    });
+  }
 })();
