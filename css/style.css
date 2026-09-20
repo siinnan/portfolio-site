@@ -485,6 +485,41 @@ button:focus-visible,
   color: var(--text-dimmer);
 }
 
+.phone-field {
+  display: flex;
+  align-items: stretch;
+  background: var(--tile-bg);
+  border: 2px solid var(--border);
+}
+
+.phone-field:focus-within { outline: 2px solid var(--accent-hover); outline-offset: 2px; }
+
+.phone-prefix {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  border-right: 2px solid var(--border);
+  user-select: none;
+}
+
+.contact-form .phone-field input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+}
+
+.contact-form .phone-field input:focus-visible { outline: none; }
+
+.contact-status { font-size: 13px; line-height: 1.4; color: var(--text-dim); }
+.contact-status:empty { display: none; }
+
+.contact-form button:disabled { opacity: 0.6; cursor: default; }
+
 /* ---------- Footer ---------- */
 
 .site-footer {
