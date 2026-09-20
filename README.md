@@ -8,7 +8,7 @@ free to host on GitHub Pages.
 index.html          the page
 css/style.css        all styling
 js/main.js            tile data + open/close behaviour + video wiring
-assets/videos/        drop .mp4 files here (see assets/videos/README.md)
+assets/videos/        notes only — the actual video files live on Cloudflare R2 (see assets/videos/README.md)
 design/                the original Claude Design handoff (mockups, chat log) — reference only, not shipped
 ```
 
@@ -24,9 +24,10 @@ python3 -m http.server 8000
 
 ## Add videos
 
-See `assets/videos/README.md`. Short version: name each `.mp4` after the
-tile's `slug` in `js/main.js` and drop it in `assets/videos/` — nothing else
-to wire up.
+Video files are hosted on Cloudflare R2 (free tier), not in this repo — see
+`assets/videos/README.md` for the bucket details and how to add a clip.
+Short version: upload the file to the R2 bucket, then set its `file` field
+in the `WORK` array in `js/main.js` to the exact object name you uploaded.
 
 ## Host it on GitHub Pages (free)
 
@@ -36,10 +37,10 @@ to wire up.
 3. GitHub gives you a `https://<username>.github.io/<repo>/` URL a minute or
    two later.
 
-That's the whole hosting setup — no server, no framework, no cost. The one
-thing to watch as you add videos is repo size (see the note in
-`assets/videos/README.md` on keeping files small and when to move to Git LFS
-or an external host instead).
+That's the whole hosting setup for the page itself — no server, no
+framework, no cost. Video files are served separately from Cloudflare R2
+(see `assets/videos/README.md`), so repo size never becomes an issue as you
+add more clips.
 
 ## About `design/`
 
